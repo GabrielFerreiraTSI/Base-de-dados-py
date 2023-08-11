@@ -20,6 +20,7 @@ class App(tk.Tk):
         self.varNome = tk.StringVar(self)
         self.entryNome = ttk.Entry(self, textvariable=self.varNome, font=("Arial", 18)) 
         self.entryNome.grid(column=1, row=1, sticky="we", padx=20, pady=5)
+        self.entryNome.focus()
         
         
         self.labelEmail = ttk.Label(self, text="Email", font=("Arial", 18))
@@ -28,6 +29,7 @@ class App(tk.Tk):
         self.varEmail = tk.StringVar(self)
         self.entryEmail = ttk.Entry(self, textvariable=self.varEmail, font=("Arial", 18)) 
         self.entryEmail.grid(column=1, row=2, sticky="we", padx=20, pady=5)
+        self.entryEmail.focus()
         
         
         self.frameLista = ttk.Label(self)
@@ -62,7 +64,7 @@ class App(tk.Tk):
         self.buttonInserir.grid(column=2, row=3, sticky="nwes", padx=20, pady=5, ipadx=20)
         
         self.buttonConsultar = ttk.Button(self, text="Consultar", command=self.consultar)
-        self.buttonInserir.grid(column=2, row=4, sticky="nwes", padx=20, pady=5, ipadx=20)
+        self.buttonConsultar.grid(column=2, row=4, sticky="nwes", padx=20, pady=5, ipadx=20)
         
         self.buttonExcluir = ttk.Button(self, text="Excluir", command=self.excluir)
         self.buttonExcluir.grid(column=2, row=5, sticky="nwes", padx=20, pady=5, ipadx=20)
@@ -97,7 +99,7 @@ class App(tk.Tk):
             mycursor = conexao.cursor()
             query = """CREATE TABLE IF NOT EXISTS pessoas(
                 nome VARCHAR(50),
-                email VARRCHAR(50),
+                email VARCHAR(50),
                 PRIMARY KEY(email));"""
             mycursor.execute(query)
             self.varResultado.set("Tabela criada com sucesso!")
@@ -198,7 +200,7 @@ class App(tk.Tk):
                 database = "base_de_dados")
                 
                 mycursor = conexao.cursor()
-                query = "DELETE * FROM pessoas WHERE nome = %s AND email = %s);"
+                query = "DELETE FROM pessoas WHERE nome = %s AND email = %s;"
                 valores = (nome, email)
                 mycursor.execute(query, valores)
                 conexao.commit()
@@ -255,7 +257,7 @@ class App(tk.Tk):
                 database = "base_de_dados")
                 
                 mycursor = conexao.cursor()
-                query = "UPDATE pessoas SET nome = %s, email = %s WHERE nome = %s AND email = %s);"
+                query = "UPDATE pessoas SET nome = %s, email = %s WHERE nome = %s AND email = %s;"
                 valores = (nome, email, nomeRegistro, emailRegistro)
                 mycursor.execute(query, valores)
                 conexao.commit()
